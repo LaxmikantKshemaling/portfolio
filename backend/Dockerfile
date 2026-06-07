@@ -8,8 +8,6 @@ RUN chmod +x mvnw
 
 RUN ./mvnw clean package -DskipTests
 
-COPY target/*.jar app.jar
-
 EXPOSE 8080
 
-ENTRYPOINT ["java","-jar","app.jar"]
+CMD ["java","-jar","target/portfolio-0.0.1-SNAPSHOT.jar"]
