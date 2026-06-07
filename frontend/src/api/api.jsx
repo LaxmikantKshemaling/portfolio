@@ -1,8 +1,7 @@
 import axios from "axios";
 
-const API_URL = "https://portfolio-backend-gj6h.onrender.com";
-
-// const API_URL = "http://localhost:8080/api/contact";
+const API_URL =
+  "https://portfolio-backend-gj6h.onrender.com/api/contact";
 
 export const sendContactMessage = async (data) => {
   try {
@@ -12,7 +11,10 @@ export const sendContactMessage = async (data) => {
 
     return response.data;
   } catch (error) {
-    console.error("API ERROR:", error.response?.data || error.message);
+    console.error(
+      "API ERROR:",
+      error.response?.data || error.message
+    );
     throw error;
   }
 };
