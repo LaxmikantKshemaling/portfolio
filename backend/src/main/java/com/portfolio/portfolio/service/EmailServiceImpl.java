@@ -1,29 +1,50 @@
 package com.portfolio.portfolio.service;
 
-import com.portfolio.portfolio.service.EmailService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.scheduling.annotation.Async;
+import okhttp3.*;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
-@RequiredArgsConstructor
 public class EmailServiceImpl implements EmailService {
 
-    private final JavaMailSender mailSender;
+    @Value("${RESEND_API_KEY}")
+    private String apiKey;
 
-    @Async
     @Override
-    public void sendEmail(String to, String subject, String body) {
+    public void sendEmail(String name, String email, String message) throws Exception {
 
-        SimpleMailMessage message = new SimpleMailMessage();
+        OkHttpClient client = new OkHttpClient();
 
-        message.setFrom("laxmikantaloji77@gmail.com");
-        message.setTo(to);
-        message.setSubject(subject);
-        message.setText(body);
+        String json = """
+        {
+          "from": "Portfolio <onboarding@resend.dev>",
+          "to": ["laxmikantaloji77@gmail.com"],
+          "subject": "New Portfolio Contact Message",
+          "html": "<h3>New Contact Form Submission</h3><br><b>Name:</b> %s<br><b>Email:</b> %s<br><br><b>Message:</b><br>%s"
+        }
+        """.formatted(name, email, message);
 
-        mailSender.send(message);
+        RequestBody requestBody =
+                RequestBody.create(
+                        json,
+                        MediaType.parse("application/json")
+                );
+
+        Request request = new Request.Builder()
+                .url("https://api.resend.com/emails")
+                .addHeader("Authorization", "Bearer " + apiKey)
+                .addHeader("Content-Type", "application/json")
+                .post(requestBody)
+                .build();
+
+        Response response = client.newCall(request).execute();
+
+        if (!response.isSuccessful()) {
+            throw new RuntimeException(
+                    "Resend Email Failed: " + response.body().string()
+            );
+        }
+
+        System.out.println("EMAIL SENT SUCCESSFULLY");
     }
 }

@@ -13,19 +13,23 @@ public class ContactServiceImpl implements ContactService {
     @Override
     public ContactMessageDTO saveMessage(ContactMessageDTO dto) {
 
-        String subject = "New Contact Message - Portfolio";
+        try {
 
-        String body =
-                "Name: " + dto.getName() + "\n" +
-                        "Email: " + dto.getEmail() + "\n\n" +
-                        dto.getMessage();
+            emailService.sendEmail(
+                    dto.getName(),
+                    dto.getEmail(),
+                    dto.getMessage()
+            );
 
-        emailService.sendEmail(
-                "laxmikantaloji77@gmail.com",
-                subject,
-                body
-        );
+            return dto;
 
-        return dto;
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+            throw new RuntimeException(
+                    "Failed to send email: " + e.getMessage()
+            );
+        }
     }
 }
