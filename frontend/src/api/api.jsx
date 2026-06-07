@@ -1,6 +1,8 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:8080/api/contact";
+const API_URL = "https://portfolio-backend-gj6h.onrender.com";
+
+// const API_URL = "http://localhost:8080/api/contact";
 
 export const sendContactMessage = async (data) => {
   try {
