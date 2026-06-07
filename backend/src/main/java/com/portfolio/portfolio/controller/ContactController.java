@@ -20,11 +20,6 @@ public class ContactController {
 
     private final ContactService contactService;
 
-     @GetMapping("/")
-    public String home() {
-        return "Portfolio Backend Running Successfully 🚀";
-    }
-
     @PostMapping
     public ResponseEntity<?> sendMessage(
             @RequestBody @Valid ContactMessageDTO dto) {
