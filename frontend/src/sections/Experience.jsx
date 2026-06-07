@@ -1,6 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { SolarPanelIcon } from "lucide-react";
-
+import React from "react";
 
 const experiences = [
   {
@@ -72,9 +70,21 @@ export const Experience = () => {
 
         <div className="relative">
           <div
-            className="timeline-glow absolute left-0 md:left-1/2 top-0 bottom-0
-            w-[2px] bg-gradient-to-b from-primary/70 via-primary/30 to-transparent
-            md:-translate-x-1/2 z-0"
+            className="
+              timeline-glow
+              absolute
+              left-0
+              md:left-1/2
+              top-0
+              bottom-0
+              w-[2px]
+              bg-gradient-to-b
+              from-primary/70
+              via-primary/30
+              to-transparent
+              md:-translate-x-1/2
+              z-0
+            "
           />
 
           <div className="space-y-12">
@@ -85,9 +95,20 @@ export const Experience = () => {
                 style={{ animationDelay: `${(idx + 1) * 150}ms` }}
               >
                 <div
-                  className="absolute left-0 md:left-1/2 top-4 w-3 h-3
-                  bg-primary rounded-full -translate-x-1/2
-                  ring-4 ring-background z-20"
+                  className="
+                    absolute
+                    left-0
+                    md:left-1/2
+                    top-4
+                    w-3
+                    h-3
+                    bg-primary
+                    rounded-full
+                    -translate-x-1/2
+                    ring-4
+                    ring-background
+                    z-20
+                  "
                 >
                   {exp.current && (
                     <span className="absolute inset-0 rounded-full bg-primary animate-ping opacity-75" />
@@ -143,3 +164,4 @@ export const Experience = () => {
   );
 };
 
+export default Experience;
